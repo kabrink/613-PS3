@@ -1,0 +1,57 @@
+---
+title: "Problem Set 3"
+author: "Kimberly A. Brink"
+date: '`r format(Sys.Date(),"%B %d, %Y")`'
+output: pdf_document
+---
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, fig.path="Figures/", dev = "png")
+```
+
+##Question 1.
+
+```{r load_libraries}
+#load libraries
+library(gmodels)
+library(car)
+```
+
+```{r Q1a, echo=FALSE}
+#set up data
+grade = c( 70,56,56,49,56,57,49,60,70,69,65,81,47,64,62,72,73,77,82,72,79,73,84,82 )
+group = c( rep( 1, 8 ),rep( 2, 8 ),rep( 3, 8 ) )
+data.Q1 = data.frame( group,grade )
+names(data.Q1) <- c( "group","grade" )
+data.Q1$group <- factor( data.Q1$group )
+```
+
+###1b.
+```{r Q1b}
+out.model <- aov( grade ~ group, data.Q1 )
+fit.contrast( out.model, "group", c( 0,1,-1 ), df=T, conf.int=.95, show.all=T )
+```
+
+###1c.
+```{r Q1c}
+out.model <- aov( grade ~ group, data.Q1 )
+fit.contrast( out.model, "group", c( 1,1,-2 ), df=T, conf.int=.95, show.all=T )
+```
+
+#Question 2.
+```{r load_file, echo=FALSE}
+
+filename="/Users/kabrink/Dropbox/GSI/PSYCH 613/Problem Sets/Problem Set 3/variance-question.csv"
+data.Q2 <- read.csv(filename)
+data.Q2$group <- factor( data.Q2$group )
+
+```
+
+###2a.
+```{r boxplot}
+boxplot(dv ~ group, data=data.Q2)
+```
+
+###2c.
+```{r spreadlevel}
+slp(dv ~ group, data=data.Q2)
+```
